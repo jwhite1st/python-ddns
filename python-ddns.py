@@ -15,8 +15,6 @@ def get_ip():
         # doesn't even have to be reachable
         s.connect(('1.1.1.1', 1))
         host = s.getsockname()[0]
-    except:
-        host = '127.0.0.1'
     finally:
         s.close()
     return host
@@ -36,7 +34,7 @@ def add_record(ip):
         except KeyError:
             error_code = output['errors'][0]['code']
         # This error code means the record can not be proxied. Likely due to a private IP
-        if error_code == 9041: 
+        if error_code == 9041:
             record['proxied'] = False
             r = post(record)
             if r.json()['success']:
@@ -55,6 +53,5 @@ def post(content):
     zone = config['Cloudflare']['Zone']
     api_url = base_url+zone+"/dns_records"
     return requests.post(api_url, json=content, headers=headers).json()
-    
 
 add_record(get_ip())
