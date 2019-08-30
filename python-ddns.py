@@ -1,16 +1,15 @@
-# pylint: disable=invalid-name
+# pylint: disable=invalid-name, missing-docstring
 import configparser
 import socket
 import requests
 # import ipaddress
 
-
 base_url = "https://api.cloudflare.com/client/v4/zones/"
 config = configparser.ConfigParser()
 config.read("config.conf")
 
-
-def get_ip(): #Shamlessly taken from stackoverflow https://stackoverflow.com/a/28950776/11542276
+# Shamlessly taken from stackoverflow https://stackoverflow.com/a/28950776/11542276
+def get_ip():
     s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
     try:
         # doesn't even have to be reachable
@@ -22,16 +21,20 @@ def get_ip(): #Shamlessly taken from stackoverflow https://stackoverflow.com/a/2
         s.close()
     return host
 
+
 def add_record(ip):
     record = {}
     record["type"] = "A"
     record["name"] = config['Cloudflare']['name']
     record['content'] = ip
     record['proxied'] = config['Cloudflare']['proxied'] == 'True'
-    r = post(record)
-    output = r.json()
+    output = post(record)
+    print(output)
     if not output['success']:
-        error_code = output['errors'][0]['error_chain'][0]['code']
+        try:
+            error_code = output['errors'][0]['error_chain'][0]['code']
+        except KeyError:
+            error_code = output['errors'][0]['code']
         # This error code means the record can not be proxied. Likely due to a private IP
         if error_code == 9041: 
             record['proxied'] = False
@@ -44,14 +47,14 @@ def add_record(ip):
     if output['success']:
         print("The record was created successfully")
 
+
 def post(content):
-    headers = {'Authorization': config['Cloudflare']['API_Token'], "X-Auth-Email": config['Cloudflare']['Email'],
-         "Content-Type": "application/json"}
+    headers = {'Authorization': config['Cloudflare']['API_Token'],
+               "X-Auth-Email": config['Cloudflare']['Email'],
+               "Content-Type": "application/json"}
     zone = config['Cloudflare']['Zone']
     api_url = base_url+zone+"/dns_records"
-    return requests.post(api_url, json=content, headers=headers)
+    return requests.post(api_url, json=content, headers=headers).json()
     
 
-ip = get_ip()
-
-add_record("192.168.0.2")
+add_record(get_ip())
