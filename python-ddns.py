@@ -1,7 +1,9 @@
-import requests
-import socket
-# import ipaddress
+# pylint: disable=invalid-name
 import configparser
+import socket
+import requests
+# import ipaddress
+
 
 base_url = "https://api.cloudflare.com/client/v4/zones/"
 config = configparser.ConfigParser()
@@ -13,13 +15,12 @@ def get_ip(): #Shamlessly taken from stackoverflow https://stackoverflow.com/a/2
     try:
         # doesn't even have to be reachable
         s.connect(('1.1.1.1', 1))
-        IP = s.getsockname()[0]
+        host = s.getsockname()[0]
     except:
-        IP = '127.0.0.1'
+        host = '127.0.0.1'
     finally:
         s.close()
-    return IP
-
+    return host
 
 def add_record(ip):
     record = {}
@@ -31,7 +32,8 @@ def add_record(ip):
     output = r.json()
     if not output['success']:
         error_code = output['errors'][0]['error_chain'][0]['code']
-        if error_code == 9041: # This error code means the record can not be proxied. Likely due to a private IP
+        # This error code means the record can not be proxied. Likely due to a private IP
+        if error_code == 9041: 
             record['proxied'] = False
             r = post(record)
             if r.json()['success']:
@@ -43,7 +45,8 @@ def add_record(ip):
         print("The record was created successfully")
 
 def post(content):
-    headers = {'Authorization': config['Cloudflare']['API_Token'], "X-Auth-Email": config['Cloudflare']['Email'], "Content-Type": "application/json"}
+    headers = {'Authorization': config['Cloudflare']['API_Token'], "X-Auth-Email": config['Cloudflare']['Email'],
+         "Content-Type": "application/json"}
     zone = config['Cloudflare']['Zone']
     api_url = base_url+zone+"/dns_records"
     return requests.post(api_url, json=content, headers=headers)
