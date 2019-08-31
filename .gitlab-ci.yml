@@ -1,36 +1,25 @@
-#est:pylint:36:
-#  image: python:3.6
-#  script:
-#    - pip install -r requirements.txt
-#    - pip install pylint --quiet
-#    - pylint --ignored-classes=_socketobject *.py
-
-#test:pylint:37:
-#  image: python:3.7
-#  script:
-
 .test:
   script:
     - pip install -r requirements.txt
     - pip install pylint --quiet
     - pylint --ignored-classes=_socketobject *.py
 
-test-3.4:
+python-3.4:
   extends: ".test"
   stage: test
   image: python:3.4
 
-test-3.5:
+python-3.5:
   extends: ".test"
   stage: test
   image: python:3.5
 
-test-3.6:
+python-3.6:
   extends: ".test"
   stage: test
   image: python:3.6
 
-test-3.7:
+python-3.7:
   extends: ".test"
   stage: test
   image: python:3.7
