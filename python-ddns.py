@@ -1,4 +1,4 @@
-# pylint: disable=invalid-name, missing-docstring
+# pylint: disable=invalid-name, missing-docstring, inconsistent-return-statements
 import configparser
 import socket
 import requests
