@@ -7,12 +7,18 @@ This is program written in python that acts as a DDNS client, currently just for
 Works on python3 and up.  
 
 I plan on making it a ppa to have it easier to update.
-![Keybase PGP](https://img.shields.io/keybase/pgp/jake1st)
 
 ## To use
 
 ```bash
+git clone https://github.com/jwhite1st/python-ddns
+cd python-ddns/
 pip install -r requirements
+# Modify config.conf with the require fields.
 # To test configuration
 python3 python-ddns.py
+# Edit crontab to run script
+crontab -e
+# Add
+0 * * * * /usr/bin/python3 $PWD/python-ddns.py >/dev/null 2>&1 #Updates every hour.
 ```
