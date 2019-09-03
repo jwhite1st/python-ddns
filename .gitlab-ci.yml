@@ -31,6 +31,10 @@ python-3.7:
 build:
   image: python:3.6
   stage: build
+  variables:
+    TWINE_USERNAME: $STAGING_USERNAME
+    TWINE_PASSWORD: $STAGING_PASSWORD
   script:
-    - pip install -U setuptools
-    - python setup.py
+    - pip install -U setuptools twine
+    - python setup.py sdist bdist_wheel
+    - python -m twine upload --repository-url https://test.pypi.org/legacy/ dist/*
