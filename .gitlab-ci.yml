@@ -1,6 +1,7 @@
 stages:
 - test
-- deploy
+- deploy_stage
+- deploy_prod
 
 .test:
   script:
@@ -30,7 +31,7 @@ python-3.7:
 
 deploy_staging:
   image: python:3.6
-  stage: deploy
+  stage: deploy_stage
   variables:
     TWINE_USERNAME: $STAGING_USERNAME
     TWINE_PASSWORD: $STAGING_PASSWORD
@@ -43,7 +44,7 @@ deploy_staging:
   
 
 deploy_production:
-  stage: deploy
+  stage: deploy_prod
   variables:
     TWINE_USERNAME: $PRODUCTION_USERNAME
     TWINE_PASSWORD: $PRODUCTION_PASSWORD
