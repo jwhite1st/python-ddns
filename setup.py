@@ -7,7 +7,7 @@ def read(fname):
 
 setup(
     name="Python DDNS",
-    version="0.0.1 $CI_BUILD_ID",
+    version="0.0.1",
     author="Jacob White",
     author_email="jake@jwhite.network",
     install_requires=['requests'],
