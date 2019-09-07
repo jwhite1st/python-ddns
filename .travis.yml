@@ -10,4 +10,4 @@ install:
   - pip install pylint
 # command to run tests
 script:
-  - pylint --ignored-classes=_socketobject jwhite1st/python-ddns/python-ddns/python-ddns.py
+  - pylint --ignored-classes=_socketobject jwhite1st/python-ddns/*.py
