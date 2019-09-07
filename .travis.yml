@@ -10,5 +10,4 @@ install:
   - pip install pylint
 # command to run tests
 script:
-  - ls -la
   - pylint --ignored-classes=_socketobject ./python-ddns/*.py
