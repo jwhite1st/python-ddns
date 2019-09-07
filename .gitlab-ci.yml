@@ -30,17 +30,16 @@ python-3.7:
   image: python:3.7
 
 deploy_staging:
-  image: python:3.6
+ # expect:tags
   stage: deploy_stage
+  image: python:3.6
   variables:
-     TWINE_USERNAME: $STAGING_USERNAME
+    TWINE_USERNAME: $STAGING_USERNAME
     TWINE_PASSWORD: $STAGING_PASSWORD
   script:
     - pip install -U setuptools twine
     - python setup.py sdist bdist_wheel
     - python -m twine upload --repository-url https://test.pypi.org/legacy/ dist/*
-  expect:
-    tags
   
 
 deploy_production:
