@@ -2,7 +2,7 @@ language: python
 python:
   - "3.4"
   - "3.5"
-  - "3.6"      # current detault Python on Travis CI
+  - "3.6"
   - "3.7"
 # command to install dependencies
 install:
@@ -10,4 +10,4 @@ install:
   - pip install pylint
 # command to run tests
 script:
-  - pylint --ignored-classes=_socketobject python-dnns/python-ddns.py
+  - pylint --ignored-classes=_socketobject jwhite1st/python-ddns/python-ddns/python-ddns.py
