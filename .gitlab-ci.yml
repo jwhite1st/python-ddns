@@ -7,7 +7,7 @@ stages:
   script:
     - pip install -r requirements.txt
     - pip install pylint --quiet
-    - pylint --ignored-classes=_socketobject *.py
+    - pylint --ignored-classes=_socketobject ./python-ddns/python-ddns.py
 
 python-3.4:
   extends: ".test"
@@ -33,14 +33,14 @@ deploy_staging:
   image: python:3.6
   stage: deploy_stage
   variables:
-    TWINE_USERNAME: $STAGING_USERNAME
+     TWINE_USERNAME: $STAGING_USERNAME
     TWINE_PASSWORD: $STAGING_PASSWORD
   script:
     - pip install -U setuptools twine
     - python setup.py sdist bdist_wheel
     - python -m twine upload --repository-url https://test.pypi.org/legacy/ dist/*
-#    expect:
-#          - tags
+  expect:
+    tags
   
 
 deploy_production:
