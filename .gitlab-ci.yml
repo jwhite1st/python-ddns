@@ -1,6 +1,7 @@
 stages:
 - test
 - deploy_stage
+- test_stage
 - deploy_prod
 
 .test:
@@ -40,6 +41,12 @@ deploy_staging:
     - pip install -U setuptools twine
     - python setup.py sdist bdist_wheel
     - python -m twine upload --repository-url https://test.pypi.org/legacy/ dist/*
+
+test_stage:
+  stage: test_stage
+  image: python:3.6
+  script:
+    - pip install --index-url https://test.pypi.org/simple/ python-ddns
   
 
 deploy_production:
