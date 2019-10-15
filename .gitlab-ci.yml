@@ -46,7 +46,7 @@ deploy_staging:
 
 test_stage:
   except:
-    -tags
+    - tags
   stage: test_stage
   image: python:3.6
   script:
