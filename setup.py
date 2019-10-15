@@ -24,7 +24,7 @@ setup(
     },
     license='GPL-3.0',
     packages=['python-ddns'],
-    python_requires='>=3.6',
+    python_requires='>=3',
     classifiers=[
         "License :: OSI Approved :: GNU General Public License v3 (GPLv3)",
         "Operating System :: OS Independent",
@@ -34,4 +34,5 @@ setup(
         "Development Status :: 2 - Pre-Alpha"
     ],
     long_description=read('README.md'),
+    long_description_content_type='text/markdown'
 )
