@@ -4,6 +4,9 @@ stages:
 - test_stage
 - deploy_prod
 
+include:
+  template: Dependency-Scanning.gitlab-ci.yml
+
 .test:
   script:
     - pip install -r requirements.txt
@@ -51,6 +54,7 @@ test_stage:
   image: python:3.6
   script:
     - pip install --index-url https://test.pypi.org/simple/ python-ddns
+    - pip show python-ddns
   
 
 deploy_production:
