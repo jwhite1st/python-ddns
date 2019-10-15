@@ -1,13 +1,18 @@
 # pylint: disable=invalid-name, missing-docstring, line-too-long
 import os
 from setuptools import setup
+# https://medium.com/@pypripackages/using-gitlab-pipelines-to-deploy-python-packages-in-production-and-staging-environments-8ab7dc979274
+if os.environ.get('CI_COMMIT_TAG'):
+    v = os.environ['CI_COMMIT_TAG']
+else:
+    v = os.environ['CI_JOB_ID']
 
 def read(fname):
     return open(os.path.join(os.path.dirname(__file__), fname)).read()
 
 setup(
     name="Python DDNS",
-    version="0.0.2",
+    version=v,
     author="Jacob White",
     author_email="jake@jwhite.network",
     install_requires=['requests'],
