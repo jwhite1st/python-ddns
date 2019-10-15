@@ -54,12 +54,13 @@ test_stage:
   
 
 deploy_production:
+  image: python:3.6
   stage: deploy_prod
   variables:
     TWINE_USERNAME: $PRODUCTION_USERNAME
     TWINE_PASSWORD: $PRODUCTION_PASSWORD
   script:
-    - twine upload dist/*
+    - pip install -U setuptools twine
+    - python -m twine upload dist/*
   only:
     - tags
-  when: manual
