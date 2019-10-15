@@ -31,7 +31,6 @@ python-3.7:
   image: python:3.7
 
 deploy_staging:
- # expect:tags
   stage: deploy_stage
   image: python:3.6
   variables:
@@ -40,7 +39,7 @@ deploy_staging:
   script:
     - pip install -U setuptools twine
     - python setup.py sdist bdist_wheel
-    - python -m twine upload --repository-url https://test.pypi.org/legacy/ dist/*
+    - python -m twine upload --verbose --repository-url https://test.pypi.org/legacy/ dist/*
 
 test_stage:
   stage: test_stage
