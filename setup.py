@@ -16,7 +16,7 @@ setup(
     author="Jacob White",
     author_email="jake@jwhite.network",
     install_requires=['requests'],
-    package_data={'': ['python-ddns/*.conf']},
+    package_data={'': ['*.conf']},
     description="A DDNS client written in python that updates the A record on Cloudflare with the current IP of this device.",
     url="https://gitlab.com/jwhite1st/python-ddns",
     project_urls={
