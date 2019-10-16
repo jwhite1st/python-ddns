@@ -1,8 +1,9 @@
 # pylint: disable=invalid-name, missing-docstring, inconsistent-return-statements
 import configparser
 import socket
+import sys
 import requests
-# import ipaddress
+
 
 BASE_URL = "https://api.cloudflare.com/client/v4/zones/"
 CONFIG = configparser.ConfigParser()
@@ -78,9 +79,14 @@ def send(content, which, extra=None):
         api_url = api_url+"/"+extra
         return requests.put(api_url, json=content, headers=headers).json()
 
+def quick_test():
+    print(CONFIG['Cloudflare'])
 
-check = check_record()
-if check:
-    update_record(get_ip(), check)
-else:
-    add_record(get_ip())
+def main():
+    if sys.argv[1] == "-t":
+        quick_test()
+    check = check_record()
+    if check:
+        update_record(get_ip(), check)
+    else:
+        add_record(get_ip())

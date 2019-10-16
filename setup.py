@@ -34,5 +34,9 @@ setup(
         "Development Status :: 2 - Pre-Alpha"
     ],
     long_description=read('README.md'),
-    long_description_content_type='text/markdown'
+    long_description_content_type='text/markdown',
+    entry_points={
+        "console_scripts": ['python-ddns = python-ddns.python-ddns:main']
+        },
+
 )
