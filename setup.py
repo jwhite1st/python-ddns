@@ -36,7 +36,7 @@ setup(
     long_description=read('README.md'),
     long_description_content_type='text/markdown',
     entry_points={
-        "console_scripts": ['python-ddns = python-ddns.python-ddns:main']
+        "console_scripts": ['python-ddns=python-ddns.python-ddns:main']
         },
 
 )
