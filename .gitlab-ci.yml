@@ -11,7 +11,7 @@ include:
   script:
     - pip install -r requirements.txt
     - pip install pylint --quiet
-    - pylint --ignored-classes=_socketobject ./python-ddns/python-ddns.py
+    - pylint --ignored-classes=_socketobject ./python_ddns/python_ddns.py
 
 python-3.4:
   extends: ".test"

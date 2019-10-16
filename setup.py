@@ -5,7 +5,10 @@ from setuptools import setup
 if os.environ.get('CI_COMMIT_TAG'):
     v = os.environ['CI_COMMIT_TAG']
 else:
-    v = os.environ['CI_JOB_ID']
+    try:
+        v = os.environ['CI_JOB_ID']
+    except KeyError as ke:
+        v = "local_build"
 
 def read(fname):
     return open(os.path.join(os.path.dirname(__file__), fname)).read()
@@ -23,7 +26,7 @@ setup(
         "Issues": "https://gitlab.com/jwhite1st/python-ddns/issues",
     },
     license='GPL-3.0',
-    packages=['python-ddns'],
+    packages=['python_ddns'],
     python_requires='>=3',
     classifiers=[
         "License :: OSI Approved :: GNU General Public License v3 (GPLv3)",
@@ -36,7 +39,7 @@ setup(
     long_description=read('README.md'),
     long_description_content_type='text/markdown',
     entry_points={
-        "console_scripts": ['python-ddns = python-ddns.python-ddns:main',]
+        "console_scripts": ['python-ddns=python_ddns.python_ddns:main',]
         },
 
 )
