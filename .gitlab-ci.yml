@@ -34,6 +34,8 @@ python-3.7:
   image: python:3.7
 
 deploy_staging:
+  only:
+    - develop
   artifacts:
      paths:
      - dist/Python_DDNS*.whl
@@ -51,6 +53,8 @@ deploy_staging:
     #- python -m twine upload --verbose --repository-url https://test.pypi.org/legacy/ dist/*
 
 test_stage:
+  only:
+    - develop
   except:
     - tags
   stage: test_stage
@@ -75,3 +79,4 @@ deploy_production:
     - python -m twine upload dist/*
   only:
     - tags
+    - master

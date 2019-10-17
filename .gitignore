@@ -128,4 +128,4 @@ dmypy.json
 .pyre/
 
 #Prevent Config Push
-config.conf
+config.mine.conf
