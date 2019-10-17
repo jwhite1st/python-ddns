@@ -80,11 +80,13 @@ def send(content, which, extra=None):
         return requests.put(api_url, json=content, headers=headers).json()
 
 def quick_test():
-    print(CONFIG['Cloudflare'])
+    if CONFIG == 0:
+        raise FileNotFoundError
 
 def main():
     if sys.argv[1] == "-t":
         quick_test()
+        sys.exit()
     check = check_record()
     if check:
         update_record(get_ip(), check)

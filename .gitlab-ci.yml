@@ -42,7 +42,7 @@ deploy_staging:
     TWINE_USERNAME: $STAGING_USERNAME
     TWINE_PASSWORD: $STAGING_PASSWORD
   script:
-    - pip install -U setuptools twine
+    - pip install -U setuptools twine --quiet
     - python setup.py sdist bdist_wheel
     - python -m twine check dist/*
     - python -m twine upload --verbose --repository-url https://test.pypi.org/legacy/ dist/*
@@ -65,7 +65,7 @@ deploy_production:
     TWINE_USERNAME: $PRODUCTION_USERNAME
     TWINE_PASSWORD: $PRODUCTION_PASSWORD
   script:
-    - pip install -U setuptools twine
+    - pip install -U setuptools twine --quiet
     - python setup.py sdist bdist_wheel
     - python -m twine check dist/*
     - python -m twine upload dist/*
