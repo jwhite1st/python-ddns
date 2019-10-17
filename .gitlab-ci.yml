@@ -55,6 +55,7 @@ test_stage:
   script:
     - pip install --index-url https://test.pypi.org/simple/ python-ddns
     - pip show -f python-ddns
+    - command -v python-ddns
     - python-ddns -t
   
 
