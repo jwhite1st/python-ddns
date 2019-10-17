@@ -34,6 +34,9 @@ python-3.7:
   image: python:3.7
 
 deploy_staging:
+  artifacts:
+     paths:
+     - dist/Python_DDNS*.whl
   except:
     - tags
   stage: deploy_stage
@@ -45,7 +48,7 @@ deploy_staging:
     - pip install -U setuptools twine --quiet
     - python setup.py sdist bdist_wheel
     - python -m twine check dist/*
-    - python -m twine upload --verbose --repository-url https://test.pypi.org/legacy/ dist/*
+    #- python -m twine upload --verbose --repository-url https://test.pypi.org/legacy/ dist/*
 
 test_stage:
   except:
@@ -53,7 +56,7 @@ test_stage:
   stage: test_stage
   image: python:3.6
   script:
-    - pip install --index-url https://test.pypi.org/simple/ python-ddns
+    - pip install *.whl
     - pip show -f python-ddns
     - command -v python-ddns
     - python-ddns -t
