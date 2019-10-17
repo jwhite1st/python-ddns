@@ -1,14 +1,14 @@
 # Python-DDNS
 
-[![Build Status](https://travis-ci.com/jwhite1st/python-ddns.svg?branch=master)](https://travis-ci.com/jwhite1st/python-ddns) [![GitHub license](https://img.shields.io/github/license/jwhite1st/python-ddns?style=flat-square)](https://github.com/jwhite1st/python-ddns/blob/master/LICENSE.md)  
-![GitHub last commit](https://img.shields.io/github/last-commit/jwhite1st/python-ddns)![GitHub issues](https://img.shields.io/github/issues-raw/jwhite1st/python-ddns)
+[![Gitlab pipeline status (branch)](https://img.shields.io/gitlab/pipeline/jwhite1st/python-ddns/master?style=flat-square)](https://gitlab.com/jwhite1st/python-ddns/pipelines) [![GitHub license](https://img.shields.io/github/license/jwhite1st/python-ddns?style=flat-square)](https://github.com/jwhite1st/python-ddns/blob/master/LICENSE.md)  
+![GitHub last commit](https://img.shields.io/github/last-commit/jwhite1st/python-ddns?style=flat-square) ![GitHub issues](https://img.shields.io/github/issues-raw/jwhite1st/python-ddns?style=flat-square)
 
-![PyPI](https://img.shields.io/pypi/v/Python-DDNS)
+[![PyPI](https://img.shields.io/pypi/v/Python-DDNS)](https://pypi.org/project/Python-DDNS/)
 
 This is program written in python that acts as a DDNS client, currently just for Cloudflare.  
 Works on python3 and up.  
 
-I plan on making it a ppa to have it easier to update.
+~~I plan on making it a ppa to have it easier to update.~~ Replaced with pypi
 
 ## Git Install
 
