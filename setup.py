@@ -7,7 +7,7 @@ if os.environ.get('CI_COMMIT_TAG'):
     v = os.environ['CI_COMMIT_TAG']
 else:
     try:
-        v = os.environ['CI_JOB_ID']
+        v = os.environ['CI_COMMIT_SHORT_SHA']
     except KeyError as ke:
         v = "local_build"
 
