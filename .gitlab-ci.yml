@@ -56,7 +56,7 @@ test_stage:
   stage: test_stage
   image: python:3.6
   script:
-    - pip install *.whl
+    - pip install dist/*.whl
     - pip show -f python-ddns
     - command -v python-ddns
     - python-ddns -t
