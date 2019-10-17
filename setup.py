@@ -34,7 +34,8 @@ setup(
         "Natural Language :: English",
         "Programming Language :: Python :: 3 :: Only",
         "Topic :: System :: Installation/Setup",
-        "Development Status :: 2 - Pre-Alpha"
+        "Development Status :: 3 - Alpha"
+        
     ],
     long_description=read('README.md'),
     long_description_content_type='text/markdown',
