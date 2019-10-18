@@ -1,12 +1,13 @@
 # pylint: disable=invalid-name, missing-docstring, line-too-long
 import os
 from setuptools import setup
+
 # https://medium.com/@pypripackages/using-gitlab-pipelines-to-deploy-python-packages-in-production-and-staging-environments-8ab7dc979274
 if os.environ.get('CI_COMMIT_TAG'):
     v = os.environ['CI_COMMIT_TAG']
 else:
     try:
-        v = os.environ['CI_JOB_ID']
+        v = os.environ['CI_COMMIT_SHORT_SHA']
     except KeyError as ke:
         v = "local_build"
 
@@ -19,7 +20,7 @@ setup(
     author="Jacob White",
     author_email="jake@jwhite.network",
     install_requires=['requests'],
-    package_data={'': ['*.conf']},
+    package_data={'': ['config.conf']},
     description="A DDNS client written in python that updates the A record on Cloudflare with the current IP of this device.",
     url="https://gitlab.com/jwhite1st/python-ddns",
     project_urls={
@@ -34,13 +35,11 @@ setup(
         "Natural Language :: English",
         "Programming Language :: Python :: 3 :: Only",
         "Topic :: System :: Installation/Setup",
-        "Development Status :: 3 - Alpha"
-        
+        "Development Status :: 3 - Alpha",
     ],
     long_description=read('README.md'),
     long_description_content_type='text/markdown',
     entry_points={
         "console_scripts": ['python-ddns=python_ddns.python_ddns:main',]
         },
-
 )
