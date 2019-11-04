@@ -4,10 +4,10 @@
 
 [![PyPI](https://img.shields.io/pypi/v/Python-DDNS)](https://pypi.org/project/Python-DDNS/) [![Gitlab pipeline status (branch)](https://img.shields.io/gitlab/pipeline/jwhite1st/python-ddns/master?style=flat-square)](https://gitlab.com/jwhite1st/python-ddns/pipelines)
 
-This is program written in python that acts as a DDNS client, currently just for Cloudflare.  
-Works on python3 and up.  
+![Gitlab pipeline status (branch)](https://img.shields.io/gitlab/pipeline/jwhite1st/python-ddns/develop?label=develop%20build&style=flat-square)
 
-~~I plan on making it a ppa to have it easier to update.~~ Replaced with pypi
+This is program written in python that acts as a DDNS client, currently just for Cloudflare. Planning for Hurricane Electric and DNSimple.
+Works on python3 and up.  
 
 ## Git Install
 
