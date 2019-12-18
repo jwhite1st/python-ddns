@@ -76,7 +76,7 @@ Deploy_to_PyPi:
     - pip install -U setuptools twine --quiet
     - python setup.py sdist bdist_wheel
     - python -m twine check dist/*
-    - python -m twine upload dist/*
+    - python -m twine upload dist/* --verbose --username $PRODUCTION_USER --password $PRODUCTION_PASSWORD
   only:
     refs:
       - tags
