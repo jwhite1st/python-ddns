@@ -1,0 +1,3 @@
+graft pddns
+include README.md LICENSE pddns/config.dist.conf
+global-exclude config.conf *.pyc

@@ -1,43 +1,47 @@
 stages:
+- lint
 - test
-- deploy_stage
-- test_stage
-- deploy_prod
+- Build
+- Test_Build
+- Deploy_to_PyPi
 
 include:
   - template: Dependency-Scanning.gitlab-ci.yml
+  - template: SAST.gitlab-ci.yml
+  - template: License-Management.gitlab-ci.yml
 
-.test:
+.lint:
+  before_script:
+    - pip install -U pip pylint flake8 requests
   script:
-    - pip install -r requirements.txt
-    - pip install pylint --quiet
-    - pylint --ignored-classes=_socketobject ./python_ddns/python_ddns.py
-
-python-3.4:
-  extends: ".test"
-  stage: test
-  image: python:3.4
+    - pylint ./pddns -r y
+    - flake8 ./pddns
 
 python-3.5:
-  extends: ".test"
-  stage: test
+  extends: ".lint"
+  stage: lint
   image: python:3.5
 
 python-3.6:
-  extends: ".test"
-  stage: test
+  extends: ".lint"
+  stage: lint
   image: python:3.6
 
 python-3.7:
-  extends: ".test"
-  stage: test
+  extends: ".lint"
+  stage: lint
   image: python:3.7
 
-Staging:
+python-3.8:
+  extends: ".lint"
+  stage: lint
+  image: python:3.8
+
+Build:
   artifacts:
      paths:
-     - dist/Python_DDNS*.whl
-  stage: deploy_stage
+     - dist/
+  stage: Build
   image: python:3.6
   variables:
     TWINE_USERNAME: $STAGING_USERNAME
@@ -46,20 +50,25 @@ Staging:
     - pip install -U setuptools twine --quiet
     - python setup.py sdist bdist_wheel
     - python -m twine check dist/*
+  except:
+    - tags
 
-test_stage:
-  stage: test_stage
+Test_Build:
+  stage: Test_Build
   image: python:3.6
   script:
     - pip install dist/*.whl
     - pip show -f python-ddns
-    - command -v python-ddns
-    - python-ddns -t
-  
+    - command -v pddns
+    - pddns -i -d
+    - pddns -t -d
+  except:
+    - tags
 
-deploy_production:
+
+Deploy_to_PyPi:
   image: python:3.6
-  stage: deploy_prod
+  stage: Deploy_to_PyPi
   variables:
     TWINE_USERNAME: $PRODUCTION_USERNAME
     TWINE_PASSWORD: $PRODUCTION_PASSWORD
