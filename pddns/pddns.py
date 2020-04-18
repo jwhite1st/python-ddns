@@ -3,10 +3,10 @@ import configparser
 import argparse
 import os
 import sys
-import socket
 import logging
+import requests
 
-from .providers import cloudflare
+from .providers import Cloudflare
 
 
 def make_logger(name, loglevel):
@@ -25,21 +25,12 @@ def make_logger(name, loglevel):
     return logger
 
 
-def get_ip():
+def get_ip() -> str:
     """
-    Gets the ip address of the system
-    Shamlessly taken from stackoverflow
-    https://stackoverflow.com/a/28950776/11542276
+    Gets the public ip address of the host system.
     """
-
-    s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-    try:
-        # doesn't even have to be reachable
-        s.connect(('1.1.1.1', 1))
-        host = s.getsockname()[0]
-    finally:
-        s.close()
-    return host
+    ip = requests.get('https://checkip.amazonaws.com').text.strip()
+    return ip
 
 
 def quick_test(log):
@@ -55,7 +46,7 @@ def quick_test(log):
     return 0
 
 
-def initialize(log):
+def initialize(log) -> int:
     """Renames config file"""
     dn = os.path.dirname(os.path.realpath(__file__))
     try:
@@ -102,7 +93,8 @@ def main():
 
     CONFIG = configparser.ConfigParser()
     CONFIG.read("config.conf")
-    cloudflare(get_ip(), CONFIG, log)
+    client = Cloudflare(CONFIG)
+    client.main(get_ip())
 
 
 if __name__ == "__main__":

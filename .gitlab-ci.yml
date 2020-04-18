@@ -1,20 +1,19 @@
 stages:
 - lint
 - test
-- Build
 - Test_Build
 - Deploy_to_PyPi
 
 include:
   - template: Dependency-Scanning.gitlab-ci.yml
   - template: SAST.gitlab-ci.yml
-  - template: License-Management.gitlab-ci.yml
+  - template: License-Scanning.gitlab-ci.yml
 
 .lint:
   before_script:
     - pip install -U pip pylint flake8 requests
   script:
-    - pylint ./pddns -r y
+    - pylint ./pddns
     - flake8 ./pddns
 
 python-3.5:
@@ -41,7 +40,7 @@ Build:
   artifacts:
      paths:
      - dist/
-  stage: Build
+  stage: test
   image: python:3.6
   variables:
     TWINE_USERNAME: $STAGING_USERNAME

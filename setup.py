@@ -12,7 +12,7 @@ def read(fname):
 setup(
     name="Python DDNS",
     version=__version__,
-    author="Jacob White",
+    author="Cyb3r Jak3",
     author_email="jake@jwhite.network",
     install_requires=['requests'],
     description="A DDNS client that updates with current IP."

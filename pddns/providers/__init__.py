@@ -1,4 +1,4 @@
 """Imports the provider modules"""
-from .cloudflare import cloudflare
+from .cloudflare import Cloudflare
 
-__all__ = ["cloudflare"]
+__all__ = ["Cloudflare"]
