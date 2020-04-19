@@ -10,7 +10,7 @@ def read(fname):
 
 
 setup(
-    name="Python DDNS",
+    name="pddns",
     version=__version__,
     author="Cyb3r Jak3",
     author_email="jake@jwhite.network",
@@ -37,6 +37,6 @@ setup(
     long_description=read('README.md'),
     long_description_content_type='text/markdown',
     entry_points={
-        "console_scripts": ['pddns=pddns.pddns:main']
+        "console_scripts": ['pddns=pddns.pddns:run']
     }
 )

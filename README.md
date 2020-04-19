@@ -23,8 +23,13 @@ pddns -i
 
 # Modify config.conf with the require fields.
 
-# To test configuration
+# To check configuration
 pddns -t
+
+# Recommended to test to make sure everything works
+
+pddns
+
 # Edit crontab to run script
 crontab -e
 # Add
@@ -36,9 +41,10 @@ crontab -e
 Source install if you would rather install it that way.
 
 ```bash
-git clone https://github.com/Cyb3r-Jak3/python-ddns
+git clone https://gitlab.com/Cyb3r-Jak3/python-ddns
 cd python-ddns/
 python setup.py install
+
 # Setups the config file to the right name
 pddns -i
 

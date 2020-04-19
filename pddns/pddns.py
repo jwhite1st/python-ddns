@@ -1,4 +1,4 @@
-"""Python client for ddns services"""
+"""Python DDNS main entry point"""
 import configparser
 import argparse
 import os
@@ -9,7 +9,7 @@ import requests
 from .providers import Cloudflare
 
 
-def make_logger(name, loglevel):
+def make_logger(name: str, loglevel: str) -> logging.Logger:
     """Makes the logger"""
     logger = logging.getLogger(name)
     logger.setLevel(loglevel)
@@ -33,20 +33,7 @@ def get_ip() -> str:
     return ip
 
 
-def quick_test(log):
-    """Tests to make sure the config is readable"""
-    CONFIG = configparser.ConfigParser()
-    CONFIG.read("config.conf")
-    if CONFIG == 0:
-        raise FileNotFoundError
-    log.debug(
-        {section: dict(CONFIG[section]) for section in CONFIG.sections()}
-        )
-    log.info("Test Completed Successfully")
-    return 0
-
-
-def initialize(log) -> int:
+def initialize(log: logging.Logger) -> int:
     """Renames config file"""
     dn = os.path.dirname(os.path.realpath(__file__))
     try:
@@ -60,10 +47,24 @@ def initialize(log) -> int:
         return 1
 
 
-def main():
+def quick_test(log: logging.Logger, CONF: configparser.ConfigParser()) -> int:
+    """Tests to make sure the config is readable"""
+    dn = os.path.dirname(os.path.realpath(__file__))
+    if len(CONF.sections()) == 0:
+        log.error("Error: File not found.\nFiles are: {}"
+                  .format(os.listdir(dn)))
+        raise FileNotFoundError("Did not find the configuration file")
+    log.debug(
+        {section: dict(CONF[section]) for section in CONF.sections()}
+        )
+    log.debug(get_ip())
+    log.info("Test Completed Successfully")
+    return 0
+
+
+def run():
     """
     Main function that does all the work
-    Will be re done with parse arg
     """
     parser = argparse.ArgumentParser(prog="pddns",
                                      description="DDNS Client")
@@ -72,6 +73,9 @@ def main():
     parser.add_argument('-i', '--initialize',
                         default=False, action="store_true",
                         help="Renames the dist config")
+    parser.add_argument("-f", "--file", default="config.conf",
+                        dest="configfile",
+                        help="Path to configuration file")
 # Logging function from https://stackoverflow.com/a/20663028
     parser.add_argument('-d', '--debug', help="Sets logging level to DEBUG.",
                         action="store_const", dest="loglevel",
@@ -88,14 +92,19 @@ def main():
     if args.initialize:
         sys.exit(initialize(log))
 
-    if args.test:
-        sys.exit(quick_test(log))
-
     CONFIG = configparser.ConfigParser()
-    CONFIG.read("config.conf")
+    if not args.configfile:
+        dn = os.path.dirname(os.path.realpath(__file__))
+        CONFIG.read(os.path.join(dn, args.configfile))
+    else:
+        CONFIG.read(args.configfile)
+
+    if args.test:
+        sys.exit(quick_test(log, CONFIG))
+
     client = Cloudflare(CONFIG)
     client.main(get_ip())
 
 
 if __name__ == "__main__":
-    main()
+    run()
