@@ -93,7 +93,7 @@ def run():
         sys.exit(initialize(log))
 
     CONFIG = configparser.ConfigParser()
-    if not args.configfile:
+    if args.configfile == "config.conf":
         dn = os.path.dirname(os.path.realpath(__file__))
         CONFIG.read(os.path.join(dn, args.configfile))
     else:

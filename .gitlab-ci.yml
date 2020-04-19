@@ -55,8 +55,6 @@ Build:
 Test_Build:
   stage: Test_Build
   image: python:3.6
-  before_script:
-    - pip install -U pip twine
   script:
     - pip install dist/*.whl
     - pip show -f pddns
