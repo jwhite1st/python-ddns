@@ -9,7 +9,7 @@
 [![Maintainability](https://api.codeclimate.com/v1/badges/fc98f6f42dc23a78ab22/maintainability)](https://codeclimate.com/github/Cyb3r-Jak3/python-ddns/maintainability)
 
 This is program written in python that acts as a DDNS client, currently just for Cloudflare. Planning for Hurricane Electric and DNSimple.
-Works on python3 and up.  
+Works on Python3.6 and up.  
 
 ## Python Install
 
@@ -55,7 +55,7 @@ pddns -t
 # Edit crontab to run script
 crontab -e
 # Add
-0 * * * * <path/to/pddns> >/dev/null 2>&1 #Updates every hour.
+0 * * * * <path/to/pddns> >/dev/null 2>&1 # Updates every hour.
 ```
 
 ### TODO
@@ -63,3 +63,4 @@ crontab -e
 - Easier config editing
 - Better service functionality
 - Other DNS systems supported
+- IPv6 support

@@ -10,12 +10,12 @@ class Cloudflare():
 
     Class that deals with records for Cloudflare.
     """
-    def __init__(self, CONFIG):
-        self.Config = CONFIG
+    def __init__(self, CONFIG, version):
+        self.Config = CONFIG["Cloudflare"]
         self.log = logging.getLogger("PDDNS")
+        self.version = version
 
         self.log.info("Cloudflare selected")
-        self.log.debug(self.Config.items("Cloudflare"))
 
     def main(self, ip: str) -> None:
         """main
@@ -43,13 +43,14 @@ class Cloudflare():
         """
         record = {}
         record["type"] = "A"
-        record["name"] = self.Config['Cloudflare']['name']
+        record["name"] = self.Config["Name"]
         output = self.send(record, "get")
+        self.log.debug(output)
         if not output["success"]:
             raise Exception("The check failed with error code {}".format(
                 output['errors'][0]['code']))
-        if output:
-            return output
+        if output["result"]:
+            return output['result'][0]['id']
         return False
 
     def add_record(self, ip: str) -> None:
@@ -63,9 +64,9 @@ class Cloudflare():
         """
         record = {}
         record["type"] = "A"
-        record["name"] = self.Config['Cloudflare']['name']
+        record["name"] = self.Config["Name"]
         record['content'] = ip
-        record['proxied'] = self.Config.getboolean("Cloudflare", "proxied")
+        record['proxied'] = self.Config.getboolean("Proxied")
         output = self.send(record, "post")
         if not output['success']:
             try:
@@ -79,7 +80,7 @@ class Cloudflare():
         if output['success']:
             self.log.info("The record was created successfully")
 
-    def update_record(self, ip: str, record_id: str):
+    def update_record(self, ip: str, record_id: str) -> None:
         """update_record
         ---
 
@@ -91,7 +92,7 @@ class Cloudflare():
         """
         record = {}
         record["type"] = "A"
-        record["name"] = self.Config['Cloudflare']['name']
+        record["name"] = self.Config["Name"]
         record['content'] = ip
         output = self.send(record, "put", record_id)
         if not output['success']:
@@ -100,6 +101,7 @@ class Cloudflare():
         else:
             self.log.info("Record updated successfully")
 
+    # pylint: disable=inconsistent-return-statements
     def send(self, content: dict,
              which: str, extra: str = None) -> Union[Any, bool]:
         """send
@@ -109,38 +111,35 @@ class Cloudflare():
 
         Arguments:
             content {dict} -- [description]
-            which {int} -- [description]
+            which {str} -- [description]
 
         Keyword Arguments:
-            extra {str} -- [description] (default: {None})
+            extra {str} -- The currect record_id if there is one
+                           (default: {None})
 
         Returns:
             Union[Any, bool] -- [description]
         """
         BASE_URL = "https://api.cloudflare.com/client/v4/zones/"
-        api_token = self.Config['Cloudflare']['API_Token']
+        api_token = self.Config["API_Token"]
         headers = {
             "Authorization": "Bearer {}".format(api_token),
-            "X-Auth-Email": self.Config['Cloudflare']['Email'],
-            "Content-Type": "application/json"}
-        zone = self.Config['Cloudflare']['Zone']
+            "X-Auth-Email": self.Config["Email"],
+            "Content-Type": "application/json",
+            "User-Agent": "PDDNS v{}".format(self.version)}
+        zone = self.Config["Zone"]
         api_url = BASE_URL + zone + "/dns_records"
         # GET Request
-        if which == "get":  # pylint: disable=no-else-return
+        if which == "get":
             r = requests.get(api_url, params=content, headers=headers).json()
             self.log.debug(r)
-            if r['result']:
-                return r['result'][0]['id']
-            return r
         # POST Request
         elif which == "post":
             r = requests.post(api_url, json=content, headers=headers).json()
             self.log.debug(r)
-            return r
         # PUT Request
         elif which == "put":
             api_url = api_url + "/" + extra
             r = requests.put(api_url, json=content, headers=headers).json()
             self.log.debug(r)
-            return r
-        return False
+        return r

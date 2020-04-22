@@ -1,12 +1,12 @@
 """Python DDNS main entry point"""
-import configparser
+from configparser import ConfigParser
 import argparse
 import os
 import sys
 import logging
 import requests
 
-from .providers import Cloudflare
+from .providers import Cloudflare, HurricaneElectric
 
 
 def make_logger(name: str, loglevel: str) -> logging.Logger:
@@ -39,7 +39,8 @@ def initialize(log: logging.Logger) -> int:
     try:
         os.rename(os.path.join(dn, "config.dist.conf"),
                   os.path.join(dn, "config.conf"))
-        log.info("File renamed successfully")
+        log.info("File renamed successfully."
+                 "Path is {}/config.conf".format(dn))
         return 0
     except FileNotFoundError:
         log.info("Error: File not found.\nFiles are: {}"
@@ -47,7 +48,7 @@ def initialize(log: logging.Logger) -> int:
         return 1
 
 
-def quick_test(log: logging.Logger, CONF: configparser.ConfigParser()) -> int:
+def quick_test(log: logging.Logger, CONF: ConfigParser()) -> int:
     """Tests to make sure the config is readable"""
     dn = os.path.dirname(os.path.realpath(__file__))
     if len(CONF.sections()) == 0:
@@ -66,6 +67,7 @@ def run():
     """
     Main function that does all the work
     """
+    __version__ = "v2.1.0"
     parser = argparse.ArgumentParser(prog="pddns",
                                      description="DDNS Client")
     parser.add_argument('-t', '--test', default=False, action="store_true",
@@ -76,6 +78,10 @@ def run():
     parser.add_argument("-f", "--file", default="config.conf",
                         dest="configfile",
                         help="Path to configuration file")
+    parser.add_argument("--Cloud", action="store_true", dest="cloud",
+                        help="Forces Cloudflare")
+    parser.add_argument("--Hurricane", action="store_true", dest="hurricane",
+                        help="Forces Hurricane Electric")
 # Logging function from https://stackoverflow.com/a/20663028
     parser.add_argument('-d', '--debug', help="Sets logging level to DEBUG.",
                         action="store_const", dest="loglevel",
@@ -92,7 +98,7 @@ def run():
     if args.initialize:
         sys.exit(initialize(log))
 
-    CONFIG = configparser.ConfigParser()
+    CONFIG = ConfigParser(interpolation=None)
     if args.configfile == "config.conf":
         dn = os.path.dirname(os.path.realpath(__file__))
         CONFIG.read(os.path.join(dn, args.configfile))
@@ -102,7 +108,12 @@ def run():
     if args.test:
         sys.exit(quick_test(log, CONFIG))
 
-    client = Cloudflare(CONFIG)
+    provider = CONFIG.get("Provider", "Provider").lower()
+
+    if args.cloud or provider == "cloudflare":
+        client = Cloudflare(CONFIG, __version__)
+    if args.hurricane or provider.startswith("hurricane"):
+        client = HurricaneElectric(CONFIG, __version__)
     client.main(get_ip())
 
 

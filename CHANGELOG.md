@@ -1,5 +1,21 @@
 <!-- markdownlint-disable MD024 -->
+
 # Changelog
+
+## [v2.1.0] - UNRELEASED
+
+### Added
+
+- Hurricane Electric provider
+- Request now sent with custom user agent
+
+## Changed
+
+- Providers back to classes
+
+## Removed
+
+- fixme check in codeclimate
 
 ## [v2.0.0] - 2019-12-17
 
@@ -31,7 +47,7 @@
 ### Added
 
 - First version with pypi package
-  
+
 ## [0.0.2] 2019-09-08
 
 ### Added

@@ -15,17 +15,17 @@ setup(
     author="Cyb3r Jak3",
     author_email="jake@jwhite.network",
     install_requires=['requests'],
-    description="A DDNS client that updates with current IP."
+    description="A DDNS client that updates with current IP. "
                 "Currently only Cloudflare is supported.",
     url="https://gitlab.com/Cyb3r-Jak3/python-ddns",
     project_urls={
         "Issues": "https://gitlab.com/Cyb3r-Jak3/python-ddns/issues",
     },
-    data_files=["pddns/config.dist.conf"],
+    data_files=[("config.conf", ["pddns/config.dist.conf"])],
     license='GPL-3.0',
     packages=find_packages(),
     include_package_data=True,
-    python_requires='>=3',
+    python_requires='>=3.6',
     classifiers=[
         "License :: OSI Approved :: GNU General Public License v3 (GPLv3)",
         "Operating System :: OS Independent",
