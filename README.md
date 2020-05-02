@@ -27,7 +27,6 @@ pddns -i
 pddns -t
 
 # Recommended to test to make sure everything works
-
 pddns
 
 # Edit crontab to run script
@@ -50,8 +49,12 @@ pddns -i
 
 # Modify config.conf with the require fields.
 
-# To test configuration
+# To check configuration
 pddns -t
+
+# Recommended to test to make sure everything works
+pddns
+
 # Edit crontab to run script
 crontab -e
 # Add

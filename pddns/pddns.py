@@ -39,7 +39,7 @@ def initialize(log: logging.Logger) -> int:
     try:
         os.rename(os.path.join(dn, "config.dist.conf"),
                   os.path.join(dn, "config.conf"))
-        log.info("File renamed successfully."
+        log.info("File renamed successfully. "
                  "Path is {}/config.conf".format(dn))
         return 0
     except FileNotFoundError:

@@ -16,7 +16,7 @@ setup(
     author_email="jake@jwhite.network",
     install_requires=['requests'],
     description="A DDNS client that updates with current IP. "
-                "Currently only Cloudflare is supported.",
+                "Currently only Cloudflare and Hurricane Electric are supported.",  # noqa: E501 pylint: disable=line-too-long
     url="https://gitlab.com/Cyb3r-Jak3/python-ddns",
     project_urls={
         "Issues": "https://gitlab.com/Cyb3r-Jak3/python-ddns/issues",
