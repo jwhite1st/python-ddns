@@ -11,7 +11,7 @@
 [![Maintainability](https://api.codeclimate.com/v1/badges/fc98f6f42dc23a78ab22/maintainability)](https://codeclimate.com/github/Cyb3r-Jak3/python-ddns/maintainability)
 
 This is program written in python that acts as a DDNS client, currently just for Cloudflare. Planning for Hurricane Electric and DNSimple.
-Works on Python3.6 and up.  
+Works on Python 3.6 and up.  
 
 ## Python Install
 

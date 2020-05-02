@@ -17,10 +17,6 @@ include:
     - pylint ./pddns
     - flake8 ./pddns
 
-python-3.5-lint:
-  extends: ".lint"
-  image: python:3.5
-
 python-3.6-lint:
   extends: ".lint"
   image: python:3.6
@@ -41,13 +37,6 @@ python-3.8-lint:
    - python -m twine check dist/*
  except:
    - tags
-
-python-3.5-build:
-  extends: ".build"
-  image: python:3.5
-  artifacts:
-    paths:
-    - dist/
 
 python-3.6-build:
   extends: ".build"
@@ -81,10 +70,6 @@ python-3.8-build:
   except:
     - tags
 
-python-3.5-test:
-  extends: ".test"
-  image: python:3.5
-
 python-3.6-test:
   extends: ".test"
   image: python:3.6
@@ -93,38 +78,9 @@ python-3.7-test:
   extends: ".test"
   image: python:3.7
 
-python-3.7-test:
+python-3.8-test:
   extends: ".test"
   image: python:3.8
-
-#Build:
-#  artifacts:
-#     paths:
-#     - dist/
-#  stage: test
-#  image: python:3.7
-#  variables:
-#    TWINE_USERNAME: $STAGING_USERNAME
-#    TWINE_PASSWORD: $STAGING_PASSWORD
-#  script:
-#    - pip install -U setuptools twine --quiet
-#    - python setup.py sdist bdist_wheel
-#    - python -m twine check dist/*
-#  except:
-#    - tags
-
-# Test_Build:
-#   stage: Test_Build
-#   image: python:3.7
-#   script:
-#     - pip install dist/*.whl
-#     - pip show -f pddns
-#     - command -v pddns
-#     - pddns -i -d
-#     - pddns -t -d
-#   except:
-#     - tags
-
 
 Deploy_to_PyPi:
   image: python:3.7
