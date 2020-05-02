@@ -20,6 +20,7 @@ setup(
     url="https://gitlab.com/Cyb3r-Jak3/python-ddns",
     project_urls={
         "Issues": "https://gitlab.com/Cyb3r-Jak3/python-ddns/issues",
+        "Source": "https://gitlab.com/Cyb3r-Jak3/python-ddns"
     },
     data_files=[("config.conf", ["pddns/config.dist.conf"])],
     license='GPL-3.0',
@@ -32,7 +33,8 @@ setup(
         "Natural Language :: English",
         "Programming Language :: Python :: 3 :: Only",
         "Topic :: System :: Installation/Setup",
-        "Development Status :: 2 - Pre-Alpha",
+        "Development Status :: 3 - Alpha",
+        "Intended Audience :: System Administrators"
     ],
     long_description=read('README.md'),
     long_description_content_type='text/markdown',
