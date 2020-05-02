@@ -10,7 +10,7 @@ def read(fname):
 
 
 setup(
-    name="pddns",
+    name="python-ddns",
     version=__version__,
     author="Cyb3r Jak3",
     author_email="jake@jwhite.network",
