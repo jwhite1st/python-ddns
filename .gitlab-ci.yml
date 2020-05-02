@@ -31,8 +31,9 @@ python-3.8-lint:
 
 .build:
  stage: test
+ before_script:
+  - pip install -U setuptools twine --quiet
  script:
-   - pip install -U setuptools twine --quiet
    - python setup.py sdist bdist_wheel
    - python -m twine check dist/*
  except:
@@ -61,6 +62,8 @@ python-3.8-build:
 
 .test:
   stage: Test_Build
+  before_script:
+    - pip install -U pip
   script:
     - pip install dist/*.whl
     - pip show -f python_ddns
@@ -88,8 +91,9 @@ Deploy_to_PyPi:
   variables:
     TWINE_USERNAME: $PRODUCTION_USERNAME
     TWINE_PASSWORD: $PRODUCTION_PASSWORD
-  script:
+  before_script:
     - pip install -U pip setuptools twine --quiet
+  script:
     - python setup.py sdist bdist_wheel
     - python -m twine check dist/*
     - python -m twine upload --verbose --username $PRODUCTION_USER --password $PRODUCTION_PASSWORD dist/*
