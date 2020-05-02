@@ -2,6 +2,8 @@
 
 [![GitHub license](https://img.shields.io/github/license/Cyb3r-Jak3/python-ddns?style=flat-square)](https://github.com/Cyb3r-Jak3/python-ddns/blob/master/LICENSE.md) ![GitHub last commit](https://img.shields.io/github/last-commit/Cyb3r-Jak3/python-ddns?style=flat-square)
 
+![Supported Providers](https://img.shields.io/badge/Supported-Cloudflare%2C%20Hurriance%20Eletric-brightgreen?style=flat-square)
+
 [![PyPI](https://img.shields.io/pypi/v/Python-DDNS?style=flat-square)](https://pypi.org/project/Python-DDNS/)
 ![PyPI - Python Version](https://img.shields.io/pypi/pyversions/python-ddns?style=flat-square)  
 
