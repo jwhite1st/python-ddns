@@ -34,9 +34,6 @@ python-3.8-lint:
   image: python:3.8
 
 .build:
-  artifacts:
-    paths:
-    - dist/
  stage: test
  script:
    - pip install -U setuptools twine --quiet
@@ -48,18 +45,30 @@ python-3.8-lint:
 python-3.5-build:
   extends: ".build"
   image: python:3.5
+  artifacts:
+    paths:
+    - dist/
 
 python-3.6-build:
   extends: ".build"
   image: python:3.6
+  artifacts:
+    paths:
+    - dist/
 
 python-3.7-build:
   extends: ".build"
   image: python:3.7
+  artifacts:
+    paths:
+    - dist/
 
 python-3.8-build:
   extends: ".build"
   image: python:3.8
+  artifacts:
+    paths:
+    - dist/
 
 .test:
   stage: Test_Build
