@@ -10,14 +10,22 @@ include:
   - template: License-Scanning.gitlab-ci.yml
   - template: Security/Secret-Detection.gitlab-ci.yml
 
+
+license_scanning:
+  rules:
+    - if: '$CI_COMMIT_BRANCH == "master"'
+      when: always
+
 .lint:
   stage: lint
   before_script:
     - pip install -U pip
-    - pip install --cache-dir=~/.cache/pip/ -r requirements-dev.txt
+    - pip install --cache-dir=~/.cache/pip/ -r requirements-dev.txt --quiet
   script:
     - pylint ./pddns
     - flake8 ./pddns
+    - bandit -r ./pddns
+    - black --check ./pddns
   cache:
     key: ${CI_COMMIT_REF_SLUG}
     paths:
@@ -76,8 +84,6 @@ python-3.9-build:
     - command -v pddns
     - pddns -i -d
     - pddns -t -d
-  except:
-    - tags
 
 python-3.6-test:
   extends: ".test"

@@ -41,9 +41,7 @@ class Cloudflare():
             Union[str, bool] -- Returns either the record if it
                                 exists or False if it does not exist.
         """
-        record = {}
-        record["type"] = "A"
-        record["name"] = self.Config["Name"]
+        record = {"type": "A", "name": self.Config["Name"]}
         output = self.send(record, "get")
         self.log.debug(output)
         if not output["success"]:
@@ -62,11 +60,7 @@ class Cloudflare():
         Arguments:
             ip {str} -- [description]
         """
-        record = {}
-        record["type"] = "A"
-        record["name"] = self.Config["Name"]
-        record['content'] = ip
-        record['proxied'] = self.Config.getboolean("Proxied")
+        record = {"type": "A", "name": self.Config["Name"], 'content': ip, 'proxied': self.Config.getboolean("Proxied")}
         output = self.send(record, "post")
         if not output['success']:
             try:
@@ -90,10 +84,7 @@ class Cloudflare():
             ip {str} -- The IP Address to be updated.
             record_id {str} -- The record_id of the record to update.
         """
-        record = {}
-        record["type"] = "A"
-        record["name"] = self.Config["Name"]
-        record['content'] = ip
+        record = {"type": "A", "name": self.Config["Name"], 'content': ip}
         output = self.send(record, "put", record_id)
         if not output['success']:
             self.log.error("There was an error:")
