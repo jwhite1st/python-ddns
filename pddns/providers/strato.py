@@ -3,7 +3,7 @@ import logging
 import requests
 
 
-class Strato:   # pylint: disable=too-few-public-methods
+class Strato:  # pylint: disable=too-few-public-methods
     """Strato
     ---
 
