@@ -10,8 +10,20 @@
 [![Gitlab pipeline status (branch)](https://img.shields.io/gitlab/pipeline/Cyb3r-Jak3/python-ddns/master?style=flat-square)](https://gitlab.com/Cyb3r-Jak3/python-ddns/pipelines)
 [![Maintainability](https://api.codeclimate.com/v1/badges/fc98f6f42dc23a78ab22/maintainability)](https://codeclimate.com/github/Cyb3r-Jak3/python-ddns/maintainability)
 
-This is program written in python that acts as a DDNS client, currently just for Cloudflare. Planning for Hurricane Electric and DNSimple.
-Works on Python 3.6 and up.  
+This is program written in python that acts as a DDNS client for various providers.
+Tested and supported on the following Python versions:
+- 3.6
+- 3.7
+- 3.8
+- 3.9
+
+## Provider List
+
+- [X] Cloudflare
+- [X] Hurricane Electric
+- [X] Strato - Thanks @Braumeister
+- [ ] DBSimple
+- [ ] NameCheap
 
 ## Python Install
 

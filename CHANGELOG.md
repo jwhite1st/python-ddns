@@ -2,6 +2,14 @@
 
 # Changelog
 
+## [v2.2.0] - 2020-01-24
+
+### Added
+
+- Strato provider @Braumeister
+- Python Black and Bandit checking
+- GemFury deployment
+
 ## [v2.1.0] - 2020-05-02
 
 ### Added
