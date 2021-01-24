@@ -6,7 +6,7 @@ import sys
 import logging
 import requests
 
-from .providers import Cloudflare, HurricaneElectric
+from .providers import Cloudflare, HurricaneElectric, Strato
 
 
 def make_logger(name: str, loglevel: str) -> logging.Logger:
@@ -82,6 +82,8 @@ def run():
                         help="Forces Cloudflare")
     parser.add_argument("--Hurricane", action="store_true", dest="hurricane",
                         help="Forces Hurricane Electric")
+    parser.add_argument("--Strato", action="store_true", dest="strato",
+                        help="Forces Strato")
 # Logging function from https://stackoverflow.com/a/20663028
     parser.add_argument('-d', '--debug', help="Sets logging level to DEBUG.",
                         action="store_const", dest="loglevel",
@@ -114,6 +116,8 @@ def run():
         client = Cloudflare(CONFIG, __version__)
     if args.hurricane or provider.startswith("hurricane"):
         client = HurricaneElectric(CONFIG, __version__)
+    if args.cloud or provider == "strato":
+        client = Strato(CONFIG, __version__)
     client.main(get_ip())
 
 
