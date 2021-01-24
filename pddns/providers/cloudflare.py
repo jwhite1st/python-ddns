@@ -4,12 +4,13 @@ from typing import Union, Any
 import requests
 
 
-class Cloudflare():
+class Cloudflare:
     """Cloudflare
     ---
 
     Class that deals with records for Cloudflare.
     """
+
     def __init__(self, CONFIG, version):
         self.Config = CONFIG["Cloudflare"]
         self.log = logging.getLogger("PDDNS")
@@ -41,16 +42,17 @@ class Cloudflare():
             Union[str, bool] -- Returns either the record if it
                                 exists or False if it does not exist.
         """
-        record = {}
-        record["type"] = "A"
-        record["name"] = self.Config["Name"]
+        record = {"type": "A", "name": self.Config["Name"]}
         output = self.send(record, "get")
         self.log.debug(output)
         if not output["success"]:
-            raise Exception("The check failed with error code {}".format(
-                output['errors'][0]['code']))
+            raise Exception(
+                "The check failed with error code {}".format(
+                    output["errors"][0]["code"]
+                )
+            )
         if output["result"]:
-            return output['result'][0]['id']
+            return output["result"][0]["id"]
         return False
 
     def add_record(self, ip: str) -> None:
@@ -62,22 +64,23 @@ class Cloudflare():
         Arguments:
             ip {str} -- [description]
         """
-        record = {}
-        record["type"] = "A"
-        record["name"] = self.Config["Name"]
-        record['content'] = ip
-        record['proxied'] = self.Config.getboolean("Proxied")
+        record = {
+            "type": "A",
+            "name": self.Config["Name"],
+            "content": ip,
+            "proxied": self.Config.getboolean("Proxied"),
+        }
         output = self.send(record, "post")
-        if not output['success']:
+        if not output["success"]:
             try:
-                error_code = output['errors'][0]['error_chain'][0]['code']
+                error_code = output["errors"][0]["error_chain"][0]["code"]
             except KeyError:
-                error_code = output['errors'][0]['code']
+                error_code = output["errors"][0]["code"]
             else:
                 self.log.error("There was an error\n")
-                self.log.error(output['errors'])
+                self.log.error(output["errors"])
                 self.log.error(error_code)
-        if output['success']:
+        if output["success"]:
             self.log.info("The record was created successfully")
 
     def update_record(self, ip: str, record_id: str) -> None:
@@ -90,20 +93,16 @@ class Cloudflare():
             ip {str} -- The IP Address to be updated.
             record_id {str} -- The record_id of the record to update.
         """
-        record = {}
-        record["type"] = "A"
-        record["name"] = self.Config["Name"]
-        record['content'] = ip
+        record = {"type": "A", "name": self.Config["Name"], "content": ip}
         output = self.send(record, "put", record_id)
-        if not output['success']:
+        if not output["success"]:
             self.log.error("There was an error:")
             self.log.error(output)
         else:
             self.log.info("Record updated successfully")
 
     # pylint: disable=inconsistent-return-statements
-    def send(self, content: dict,
-             which: str, extra: str = None) -> Union[Any, bool]:
+    def send(self, content: dict, which: str, extra: str = None) -> Union[Any, bool]:
         """send
         ---
 
@@ -126,7 +125,8 @@ class Cloudflare():
             "Authorization": "Bearer {}".format(api_token),
             "X-Auth-Email": self.Config["Email"],
             "Content-Type": "application/json",
-            "User-Agent": "PDDNS v{}".format(self.version)}
+            "User-Agent": "PDDNS v{}".format(self.version),
+        }
         zone = self.Config["Zone"]
         api_url = BASE_URL + zone + "/dns_records"
         # GET Request

@@ -3,11 +3,12 @@ import logging
 import requests
 
 
-class HurricaneElectric():   # pylint: disable=too-few-public-methods
+class HurricaneElectric:  # pylint: disable=too-few-public-methods
     """HurricaneElectric
     ---
     Class that deals with records for HurricaneElectric
     """
+
     def __init__(self, CONFIG, version):
         self.Config = CONFIG["Hurricane Electric"]
         self.log = logging.getLogger("PDDNS")
@@ -27,7 +28,7 @@ class HurricaneElectric():   # pylint: disable=too-few-public-methods
         data = {
             "hostname": self.Config["Name"],
             "password": self.Config["Password"],
-            "myip": ip
+            "myip": ip,
         }
         r = requests.post(BASE_URL, data=data, headers=header)
         self.log.debug(r)
