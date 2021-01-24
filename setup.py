@@ -33,8 +33,13 @@ setup(
         "Natural Language :: English",
         "Programming Language :: Python :: 3 :: Only",
         "Topic :: System :: Installation/Setup",
-        "Development Status :: 3 - Alpha",
-        "Intended Audience :: System Administrators"
+        "Development Status :: 4 - Beta",
+        "Intended Audience :: System Administrators",
+        "Programming Language :: Python :: 3.6",
+        "Programming Language :: Python :: 3.7",
+        "Programming Language :: Python :: 3.8",
+        "Programming Language :: Python :: 3.9",
+
     ],
     long_description=read('README.md'),
     long_description_content_type='text/markdown',
