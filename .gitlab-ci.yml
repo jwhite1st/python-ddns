@@ -110,8 +110,8 @@ Deploy_to_PyPi:
   before_script:
     - pip install -U pip setuptools twine --quiet
   script:
-    - twine upload dist/*
-    - twine upload dist/* --repository-url https://push.fury.io/cyb3r-jak3 -u $GEM_TOKEN -p ""
+    - twine upload --verbose dist/* --username $PRODUCTION_USER --password $PRODUCTION_PASSWORD
+    - twine upload --verbose dist/* --repository-url https://push.fury.io/cyb3r-jak3 --username $GEM_TOKEN --password ""
   only:
     refs:
       - tags
