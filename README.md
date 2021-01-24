@@ -11,18 +11,18 @@
 
 This is program written in python that acts as a DDNS client for various providers.
 Tested and supported on the following Python versions:
-- 3.6
-- 3.7
-- 3.8
-- 3.9
+  - 3.6
+  - 3.7
+  - 3.8
+  - 3.9
 
 ## Provider List
 
-- [X] Cloudflare
-- [X] Hurricane Electric
-- [X] Strato - Thanks @Braumeister
-- [ ] DBSimple
-- [ ] NameCheap
+  - [X] Cloudflare
+  - [X] Hurricane Electric
+  - [X] Strato - Thanks @Braumeister
+  - [ ] DBSimple
+  - [ ] NameCheap
 
 ## Python Install
 
