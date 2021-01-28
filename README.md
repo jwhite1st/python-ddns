@@ -9,7 +9,7 @@
 [![Gitlab pipeline status (branch)](https://img.shields.io/gitlab/pipeline/Cyb3r-Jak3/python-ddns/master?style=flat-square)](https://gitlab.com/Cyb3r-Jak3/python-ddns/pipelines)
 [![Maintainability](https://api.codeclimate.com/v1/badges/fc98f6f42dc23a78ab22/maintainability)](https://codeclimate.com/github/Cyb3r-Jak3/python-ddns/maintainability)
 
-This is program written in python that acts as a DDNS client for various providers.
+This is program written in python that acts as a DDNS client for various providers. Supports IPv4 and IPv6.
 Tested and supported on the following Python versions:
   - 3.6
   - 3.7
@@ -79,4 +79,3 @@ crontab -e
 - Easier config editing
 - Better service functionality
 - Other DNS systems supported
-- IPv6 support

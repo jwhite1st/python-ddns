@@ -2,6 +2,12 @@
 
 # Changelog
 
+## [v2.3.0] - 2020-01-27
+
+### Added
+
+  - IPv6 Support @Braumeister
+
 ## [v2.2.0] - 2020-01-24
 
 ### Added
