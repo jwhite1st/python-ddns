@@ -18,7 +18,7 @@ class Cloudflare:
 
         self.log.info("Cloudflare selected")
 
-    def main(self, ip: str) -> None:
+    def main(self, ip: str, _) -> None:
         """main
         ---
 
