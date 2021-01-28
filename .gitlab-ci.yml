@@ -54,6 +54,7 @@ python-3.9-lint:
      - dist/
  before_script:
   - pip install -U setuptools twine --quiet
+  - pip install -r requirements.txt
  script:
    - python setup.py sdist bdist_wheel
    - python -m twine check dist/*

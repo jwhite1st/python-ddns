@@ -4,8 +4,10 @@ import argparse
 import os
 import sys
 import logging
+from socket import AddressFamily  # pylint: disable=no-name-in-module
+import ipaddress
 import requests
-
+import psutil
 from .providers import Cloudflare, HurricaneElectric, Strato
 
 
@@ -31,6 +33,31 @@ def get_ip() -> str:
     """
     ip = requests.get("https://checkip.amazonaws.com").text.strip()
     return ip
+
+
+def get_ip6(CONFIG) -> str:
+    """
+    Gets the public ipv6 address of the host system.
+    """
+    if bool(CONFIG["Ipv6"]["enable"]):
+        interface = CONFIG["Ipv6"]["Interface"]
+        ipv6_suffix = CONFIG["Ipv6"]["Suffix"]
+        prefix = int(CONFIG["Ipv6"]["Prefix"])
+
+        for ip in psutil.net_if_addrs()[interface]:
+            if ip.family == AddressFamily.AF_INET6:
+                # Only ipv6 addresses
+                if_ipaddress = ipaddress.ip_address(ip.address.split("%")[0])
+                if if_ipaddress.is_global:
+                    # Only global addresses
+                    if (
+                        int(ipaddress.ip_address(ipv6_suffix))
+                        == int(if_ipaddress) % 2 ** prefix
+                    ):
+                        # Compare suffix of ip address
+                        # modulo operatrion remove prefix from ipv6 address
+                        return str(if_ipaddress)
+    return ""
 
 
 def initialize(log: logging.Logger) -> int:
@@ -141,7 +168,7 @@ def run():
         client = HurricaneElectric(CONFIG, __version__)
     if args.cloud or provider == "strato":
         client = Strato(CONFIG, __version__)
-    client.main(get_ip())
+    client.main(get_ip(), get_ip6(CONFIG))
 
 
 if __name__ == "__main__":
