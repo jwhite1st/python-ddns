@@ -16,7 +16,7 @@ class HurricaneElectric:  # pylint: disable=too-few-public-methods
 
         self.log.info("Hurricane Electric selected")
 
-    def main(self, ip: str):
+    def main(self, ip: str, _):
         """send
         ---
 

@@ -17,7 +17,7 @@ class Strato:  # pylint: disable=too-few-public-methods
 
         self.log.info("Strato selected")
 
-    def main(self, ip: str) -> None:
+    def main(self, ip: str, ipv6: str) -> None:
         """main
         ---
 
@@ -25,10 +25,12 @@ class Strato:  # pylint: disable=too-few-public-methods
         ---
             ip {str} -- The IP address that the new record will have.
         """
+        new_ips = ip + "," + ipv6
+        new_ips = new_ips.strip(",")
         login_data = f"{self.Config['User']}:{self.Config['Password']}"
         BASE_URL = f"https://{login_data}@dyndns.strato.com/nic/update"
         header = {"User-Agent": "PDDNS v{}".format(self.version)}
-        data = {"hostname": self.Config["Name"], "myip": ip}
+        data = {"hostname": self.Config["Name"], "myip": new_ips}
         r = requests.get(BASE_URL, params=data, headers=header)
-        self.log.debug(r)
+        self.log.debug(r.text)
         r.raise_for_status()

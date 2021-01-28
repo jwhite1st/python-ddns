@@ -14,7 +14,7 @@ setup(
     version=__version__,
     author="Cyb3r Jak3",
     author_email="jake@jwhite.network",
-    install_requires=['requests'],
+    install_requires=['requests', 'psutil'],
     description="A DDNS client that updates with current IP. "
                 "Currently Cloudflare, Hurricane Electric and Strato are supported.",  # noqa: E501 pylint: disable=line-too-long
     url="https://gitlab.com/Cyb3r-Jak3/python-ddns",
