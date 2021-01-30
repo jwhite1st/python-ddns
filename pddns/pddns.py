@@ -39,7 +39,7 @@ def get_ip6(CONFIG) -> str:
     """
     Gets the public ipv6 address of the host system.
     """
-    if bool(CONFIG["Ipv6"]["enable"]):
+    if CONFIG["Ipv6"].getboolean("enable"):
         interface = CONFIG["Ipv6"]["Interface"]
         ipv6_suffix = CONFIG["Ipv6"]["Suffix"]
         prefix = int(CONFIG["Ipv6"]["Prefix"])
