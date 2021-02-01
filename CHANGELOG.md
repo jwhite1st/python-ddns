@@ -2,6 +2,12 @@
 
 # Changelog
 
+## [v2.3.1] - 2020-01-31
+
+### Bug Fixed
+
+  - Fixed bug where IPv6 was not being disabled @Braumeister
+
 ## [v2.3.0] - 2020-01-27
 
 ### Added
