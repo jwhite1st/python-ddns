@@ -1,5 +1,6 @@
 stages:
 - lint
+- pytest
 - test
 - Test_Build
 - Deploy_to_PyPi
@@ -46,6 +47,16 @@ python-3.8-lint:
 python-3.9-lint:
   extends: ".lint"
   image: python:3.9
+
+pytest:
+  image: python:3.8
+  stage: pytest
+  before_script:
+    - pip install -U pip
+    - pip install --cache-dir=~/.cache/pip/ -r requirements-dev.txt --quiet
+  script:
+    - pytest ./pddns
+
 
 .build:
  stage: test
