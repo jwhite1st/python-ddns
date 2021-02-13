@@ -9,6 +9,9 @@ def read(fname):
     return open(os.path.join(os.path.dirname(__file__), fname)).read()
 
 
+install_reqs = open("requirements.txt").readlines()
+test_reqs = open("requirements-dev.txt").readlines()[1:]
+
 setup(
     name="python-ddns",
     version=__version__,
@@ -45,5 +48,6 @@ setup(
     long_description_content_type='text/markdown',
     entry_points={
         "console_scripts": ['pddns=pddns.pddns:run']
-    }
+    },
+    tests_require=test_reqs
 )
