@@ -17,6 +17,11 @@ license_scanning:
     - if: '$CI_COMMIT_BRANCH == "master"'
       when: always
 
+secret_detection:
+  variables:
+    SECRET_DETECTION_EXCLUDED_PATHS : "tests"
+
+
 .lint:
   stage: lint
   before_script:
