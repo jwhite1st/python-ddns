@@ -28,8 +28,8 @@ def test_afraid(mocker, ipv4, ipv6, result):
         ipv6 {str}: IPv6 address
     """
 
-    mock = mocker.patch("requests.get")
-    mock.return_value = common.MockResponse()
+    mock_get = mocker.patch("requests.get")
+    mock_get.return_value = common.MockResponse()
     config = {
         "Afraid": {
             "Name": "test.afraid.de",
@@ -43,7 +43,7 @@ def test_afraid(mocker, ipv4, ipv6, result):
             provider_afraid.main(ipv4, ipv6)
     else:
         provider_afraid.main(ipv4, ipv6)
-        mock.assert_called_with(
+        mock_get.assert_called_with(
             "https://testuser:password@freedns.afraid.org/nic/update",
             params={"hostname": "test.afraid.de", "myip": result},
             headers={"User-Agent": "PDDNS v1.2.3.4"},
