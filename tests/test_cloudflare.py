@@ -8,7 +8,6 @@ class MockJSONResponse:  # pylint: disable=too-few-public-methods
 
     def __init__(self):
         self.text = "test"
-        self.json = {}
 
     @staticmethod
     def raise_for_status():
@@ -16,7 +15,7 @@ class MockJSONResponse:  # pylint: disable=too-few-public-methods
         return "failed"
 
     def json(self):
-        return  {"success": True, "result": False}
+        return {"success": True, "result": False}
 
 
 default_headers = {
