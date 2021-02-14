@@ -67,22 +67,32 @@ python-3.10-lint:
       - ~/.cache/pip/
 
 python-3.6-test:
+  needs:
+    - python-3.6-lint
   extends: ".test"
   image: python:3.6
 
 python-3.7-test:
+  needs:
+    - python-3.7-lint
   extends: ".test"
   image: python:3.7
 
 python-3.8-test:
+  needs:
+    - python-3.8-lint
   extends: ".test"
   image: python:3.8
 
 python-3.9-test:
+  needs:
+    - python-3.9-lint
   extends: ".test"
   image: python:3.9
 
 python-3.10-test:
+  needs:
+    - python-3.10-lint
   extends: ".test"
   image: python:3.10-rc
 
@@ -98,20 +108,34 @@ python-3.10-test:
    - make check-dist
 
 python-3.6-build:
+  needs:
+    - python-3.6-test
   extends: ".build"
   image: python:3.6
 
 python-3.7-build:
+  needs:
+    - python-3.7-test
   extends: ".build"
   image: python:3.7
 
 python-3.8-build:
+  needs:
+    - python-3.8-test
   extends: ".build"
   image: python:3.8
 
 python-3.9-build:
+  needs:
+    - python-3.9-test
   extends: ".build"
   image: python:3.9
+
+python-3.10-build:
+  needs:
+    - python-3.10-test
+  extends: ".build"
+  image: python:3.10-rc
 
 .test-build:
   stage: Test_Build
@@ -125,22 +149,32 @@ python-3.9-build:
     - pddns -t -d
 
 python-3.6-test-build:
+  needs:
+    - python-3.6-build
   extends: ".test-build"
   image: python:3.6
 
 python-3.7-test-build:
+  needs:
+    - python-3.7-build
   extends: ".test-build"
   image: python:3.7
 
 python-3.8-test-build:
+  needs:
+    - python-3.8-build
   extends: ".test-build"
   image: python:3.8
 
 python-3.9-test-build:
+  needs:
+    - python-3.9-build
   extends: ".test-build"
   image: python:3.9
 
 python-3.10-test-build:
+  needs:
+    - python-3.10-build
   extends: ".test-build"
   image: python:3.10-rc
 
