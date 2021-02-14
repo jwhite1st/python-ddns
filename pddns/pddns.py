@@ -8,7 +8,7 @@ from socket import AddressFamily  # pylint: disable=no-name-in-module
 import ipaddress
 import requests
 import psutil
-from .providers import Cloudflare, HurricaneElectric, Strato
+from .providers import Afraid, Cloudflare, HurricaneElectric, Strato
 
 
 def make_logger(name: str, loglevel: str) -> logging.Logger:
@@ -112,6 +112,9 @@ def run():
         help="Path to configuration file",
     )
     parser.add_argument(
+        "--Afraid", action="store_true", dest="afraid", help="Forces Afraid"
+    )
+    parser.add_argument(
         "--Cloud", action="store_true", dest="cloud", help="Forces Cloudflare"
     )
     parser.add_argument(
@@ -162,6 +165,8 @@ def run():
 
     provider = CONFIG.get("Provider", "Provider").lower()
 
+    if args.cloud or provider == "afraid":
+        client = Afraid(CONFIG, __version__)
     if args.cloud or provider == "cloudflare":
         client = Cloudflare(CONFIG, __version__)
     if args.hurricane or provider.startswith("hurricane"):
