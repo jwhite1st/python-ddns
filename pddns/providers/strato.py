@@ -1,9 +1,8 @@
 """Module for using Strato's API"""
-import logging
-import requests
+from .common import Provider
 
 
-class Strato:  # pylint: disable=too-few-public-methods
+class Strato(Provider):  # pylint: disable=too-few-public-methods
     """Strato
     ---
 
@@ -11,26 +10,26 @@ class Strato:  # pylint: disable=too-few-public-methods
     """
 
     def __init__(self, CONFIG, version):
-        self.Config = CONFIG["Strato"]
-        self.log = logging.getLogger("PDDNS")
-        self.version = version
-
+        super().__init__(CONFIG["Strato"], version)
         self.log.info("Strato selected")
 
     def main(self, ip: str, ipv6: str) -> None:
         """main
         ---
+        Strato supports IPv4 and IPv6. Both addresses will be connect to a string and
+        separated with a comma. (like 1.2.3.4,2001:0db8:85a3:08d3:1319:8a2e:0370:7344)
 
         Arguments:
         ---
             ip {str} -- The IP address that the new record will have.
+            ipv6 {str} -- The IPv6 address that the new record will have.
         """
-        new_ips = ip + "," + ipv6
-        new_ips = new_ips.strip(",")
-        login_data = f"{self.Config['User']}:{self.Config['Password']}"
-        BASE_URL = f"https://{login_data}@dyndns.strato.com/nic/update"
-        header = {"User-Agent": "PDDNS v{}".format(self.version)}
-        data = {"hostname": self.Config["Name"], "myip": new_ips}
-        r = requests.get(BASE_URL, params=data, headers=header)
-        self.log.debug(r.text)
-        r.raise_for_status()
+        if ip and ipv6:
+            new_ips = ip + "," + ipv6
+        elif ip:
+            new_ips = ip
+        elif ipv6:
+            new_ips = ipv6
+        else:
+            raise ValueError("IPv4 and IPv6 address is empty")
+        self.update_nic("dyndns.strato.com", new_ips)
