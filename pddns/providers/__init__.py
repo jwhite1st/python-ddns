@@ -2,5 +2,6 @@
 from .cloudflare import Cloudflare
 from .hurricaneElectric import HurricaneElectric
 from .strato import Strato
+from .afraid import Afraid
 
-__all__ = ["Cloudflare", "HurricaneElectric", "Strato"]
+__all__ = ["Afraid", "Cloudflare", "HurricaneElectric", "Strato"]

@@ -1,25 +1,25 @@
-"""This module test the requests for a dyndns update for strato
+"""This module test the requests for a dyndns update for afraid
 """
 import pytest
 import pddns.providers.tests.test_common as common
-import pddns.providers.strato as strato
+import pddns.providers.afraid as afraid
 
 
 @pytest.mark.parametrize(
     "ipv4, ipv6, result",
     [
-        ("1.2.3.5", "", "1.2.3.5"),
+        ("1.2.3.4", "", "1.2.3.4"),
         ("", "fe80::ef15:6e00:90c3:b2a5", "fe80::ef15:6e00:90c3:b2a5"),
         (
-            "1.2.3.5",
+            "1.2.3.4",
             "fe80::ef15:6e00:90c3:b2a5",
-            "1.2.3.5,fe80::ef15:6e00:90c3:b2a5",
+            "fe80::ef15:6e00:90c3:b2a5",
         ),
         ("", "", ValueError),
     ],
 )
-def test_strato(mocker, ipv4, ipv6, result):
-    """Test for dyndns update for strato
+def test_afraid(mocker, ipv4, ipv6, result):
+    """Test for dyndns update for afraid
 
     Arguments:
     ---
@@ -31,20 +31,20 @@ def test_strato(mocker, ipv4, ipv6, result):
     mock = mocker.patch("requests.get")
     mock.return_value = common.MockResponse()
     config = {
-        "Strato": {
-            "Name": "test.strato.de",
+        "Afraid": {
+            "Name": "test.afraid.de",
             "User": "testuser",
             "Password": "password",
         }
     }
-    provider_strato = strato.Strato(config, "1.2.3.4")
+    provider_afraid = afraid.Afraid(config, "1.2.3.4")
     if isinstance(result, type) and issubclass(result, Exception):
         with pytest.raises(ValueError):
-            provider_strato.main(ipv4, ipv6)
+            provider_afraid.main(ipv4, ipv6)
     else:
-        provider_strato.main(ipv4, ipv6)
+        provider_afraid.main(ipv4, ipv6)
         mock.assert_called_with(
-            "https://testuser:password@dyndns.strato.com/nic/update",
-            params={"hostname": "test.strato.de", "myip": result},
+            "https://testuser:password@freedns.afraid.org/nic/update",
+            params={"hostname": "test.afraid.de", "myip": result},
             headers={"User-Agent": "PDDNS v1.2.3.4"},
         )
