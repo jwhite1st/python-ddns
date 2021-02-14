@@ -119,19 +119,16 @@ class Cloudflare:
         Returns:
             Union[Any, bool] -- [description]
         """
-        BASE_URL = "https://api.cloudflare.com/client/v4/zones/"
-        api_token = self.Config["API_Token"]
         headers = {
-            "Authorization": "Bearer {}".format(api_token),
+            "Authorization": f"Bearer {self.Config['API_Token']}",
             "X-Auth-Email": self.Config["Email"],
             "Content-Type": "application/json",
-            "User-Agent": "PDDNS v{}".format(self.version),
+            "User-Agent": f"PDDNS v{self.version}",
         }
-        zone = self.Config["Zone"]
-        api_url = BASE_URL + zone + "/dns_records"
+        api_url = "https://api.cloudflare.com/client/v4/zones/" + self.Config["Zone"] + "/dns_records"
         # GET Request
         if which == "get":
-            r = requests.get(api_url, params=content, headers=headers).json()
+            r = requests.get(api_url, json=content, headers=headers).json()
             self.log.debug(r)
         # POST Request
         elif which == "post":
