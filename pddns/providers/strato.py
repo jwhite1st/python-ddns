@@ -32,4 +32,6 @@ class Strato(Provider):  # pylint: disable=too-few-public-methods
             new_ips = ipv6
         else:
             raise ValueError("IPv4 and IPv6 address is empty")
+        if self.is_ip_uptodate(ip, ipv6):
+            return
         self.update_nic("dyndns.strato.com", new_ips)

@@ -25,8 +25,12 @@ class Afraid(Provider):  # pylint: disable=too-few-public-methods
         """
         if ipv6:
             new_ip = ipv6
+            if self.is_ip_uptodate(None, ipv6):
+                return
         elif ip:
             new_ip = ip
+            if self.is_ip_uptodate(ip, None):
+                return
         else:
             raise ValueError("IPv4 and IPv6 address is empty")
         self.update_nic("freedns.afraid.org", new_ip)
