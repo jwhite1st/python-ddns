@@ -109,31 +109,31 @@ python-3.10-test:
 
 python-3.6-build:
   needs:
-    - python-3.6-test
+    - python-3.6-lint
   extends: ".build"
   image: python:3.6
 
 python-3.7-build:
   needs:
-    - python-3.7-test
+    - python-3.7-lint
   extends: ".build"
   image: python:3.7
 
 python-3.8-build:
   needs:
-    - python-3.8-test
+    - python-3.8-lint
   extends: ".build"
   image: python:3.8
 
 python-3.9-build:
   needs:
-    - python-3.9-test
+    - python-3.9-lint
   extends: ".build"
   image: python:3.9
 
 python-3.10-build:
   needs:
-    - python-3.10-test
+    - python-3.10-lint
   extends: ".build"
   image: python:3.10-rc
 
