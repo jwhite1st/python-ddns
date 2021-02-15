@@ -16,16 +16,18 @@ license_scanning:
     - if: '$CI_COMMIT_BRANCH == "master"'
       when: always
 
+secret_detection:
+  variables:
+    SECRET_DETECTION_EXCLUDED_PATHS : "tests"
+
+
 .lint:
   stage: lint
   before_script:
     - pip install -U pip
     - pip install --cache-dir=~/.cache/pip/ -r requirements-dev.txt --quiet
   script:
-    - pylint ./pddns
-    - flake8 ./pddns
-    - bandit -c .bandit -r ./pddns
-    - black --check ./pddns
+    - make lint
   cache:
     key: ${CI_COMMIT_REF_SLUG}
     paths:
@@ -47,44 +49,96 @@ python-3.9-lint:
   extends: ".lint"
   image: python:3.9
 
-pytest:
-  image: python:3.8
-  stage: pytest
+python-3.10-lint:
+  extends: ".lint"
+  image: python:3.10-rc
+
+.test:
+  stage: test
   before_script:
     - pip install -U pip
     - pip install --cache-dir=~/.cache/pip/ -r requirements-dev.txt --quiet
   script:
-    - pytest ./pddns
+    - make test
+  cache:
+    key: ${CI_COMMIT_REF_SLUG}
+    paths:
+      - ~/.cache/pip/
+
+python-3.6-test:
+  needs:
+    - python-3.6-lint
+  extends: ".test"
+  image: python:3.6
+
+python-3.7-test:
+  needs:
+    - python-3.7-lint
+  extends: ".test"
+  image: python:3.7
+
+python-3.8-test:
+  needs:
+    - python-3.8-lint
+  extends: ".test"
+  image: python:3.8
+
+python-3.9-test:
+  needs:
+    - python-3.9-lint
+  extends: ".test"
+  image: python:3.9
+
+
+python-3.10-test:
+  needs:
+    - python-3.10-lint
+  extends: ".test"
+  image: python:3.10-rc
 
 .build:
-  stage: test
-  artifacts:
-    paths:
-      - dist/
-  before_script:
-    - pip install -U setuptools twine --quiet
-    - pip install -r requirements.txt
-  script:
-    - python setup.py sdist bdist_wheel
-    - python -m twine check dist/*
+ stage: test
+ artifacts:
+   paths:
+     - dist/
+ before_script:
+  - pip install -U setuptools twine --quiet
+  - pip install -r requirements.txt
+ script:
+   - make check-dist
+
 
 python-3.6-build:
+  needs:
+    - python-3.6-lint
   extends: ".build"
   image: python:3.6
 
 python-3.7-build:
+  needs:
+    - python-3.7-lint
   extends: ".build"
   image: python:3.7
 
 python-3.8-build:
+  needs:
+    - python-3.8-lint
   extends: ".build"
   image: python:3.8
 
 python-3.9-build:
+  needs:
+    - python-3.9-lint
   extends: ".build"
   image: python:3.9
 
-.test:
+python-3.10-build:
+  needs:
+    - python-3.10-lint
+  extends: ".build"
+  image: python:3.10-rc
+
+.test-build:
   stage: Test_Build
   before_script:
     - pip install -U pip
@@ -95,21 +149,35 @@ python-3.9-build:
     - pddns -i -d
     - pddns -t -d
 
-python-3.6-test:
-  extends: ".test"
+python-3.6-test-build:
+  needs:
+    - python-3.6-build
+  extends: ".test-build"
   image: python:3.6
 
-python-3.7-test:
-  extends: ".test"
+python-3.7-test-build:
+  needs:
+    - python-3.7-build
+  extends: ".test-build"
   image: python:3.7
 
-python-3.8-test:
-  extends: ".test"
+python-3.8-test-build:
+  needs:
+    - python-3.8-build
+  extends: ".test-build"
   image: python:3.8
 
-python-3.9-test:
-  extends: ".test"
+python-3.9-test-build:
+  needs:
+    - python-3.9-build
+  extends: ".test-build"
   image: python:3.9
+
+python-3.10-test-build:
+  needs:
+    - python-3.10-build
+  extends: ".test-build"
+  image: python:3.10-rc
 
 Deploy_to_PyPi:
   image: python:3.8
