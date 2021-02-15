@@ -9,6 +9,9 @@ def read(fname):
     return open(os.path.join(os.path.dirname(__file__), fname)).read()
 
 
+install_reqs = open("requirements.txt").readlines()
+test_reqs = open("requirements-dev.txt").readlines()[1:]
+
 setup(
     name="python-ddns",
     version=__version__,
@@ -23,8 +26,8 @@ setup(
         "Source": "https://gitlab.com/Cyb3r-Jak3/python-ddns",
     },
     data_files=[("config.conf", ["pddns/config.dist.conf"])],
-    license="GPL-3.0",
-    packages=find_packages(),
+    license='GPL-3.0',
+    packages=find_packages(exclude=["tests"]),
     include_package_data=True,
     python_requires=">=3.6",
     classifiers=[
@@ -39,8 +42,12 @@ setup(
         "Programming Language :: Python :: 3.7",
         "Programming Language :: Python :: 3.8",
         "Programming Language :: Python :: 3.9",
+        "Programming Language :: Python :: 3.10",
     ],
-    long_description=read("README.md"),
-    long_description_content_type="text/markdown",
-    entry_points={"console_scripts": ["pddns=pddns.pddns:run"]},
+    long_description=read('README.md'),
+    long_description_content_type='text/markdown',
+    entry_points={
+        "console_scripts": ['pddns=pddns.pddns:run']
+    },
+    tests_require=test_reqs
 )

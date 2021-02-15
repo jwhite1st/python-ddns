@@ -1,7 +1,7 @@
 """This module test the requests for a dyndns update for strato
 """
 import pytest
-import pddns.providers.tests.test_common as common
+import tests.test_common as common
 import pddns.providers.strato as strato
 
 

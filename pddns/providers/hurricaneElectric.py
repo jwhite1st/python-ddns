@@ -24,12 +24,12 @@ class HurricaneElectric:  # pylint: disable=too-few-public-methods
             ip {str} -- The IP address for the record to point to.
         """
         BASE_URL = "https://dyn.dns.he.net/nic/update"
-        header = {"User-Agent": "PDDNS v{}".format(self.version)}
+        header = {"User-Agent": f"PDDNS v{self.version}"}
         data = {
             "hostname": self.Config["Name"],
             "password": self.Config["Password"],
             "myip": ip,
         }
         r = requests.post(BASE_URL, data=data, headers=header)
-        self.log.debug(r)
+        self.log.debug(r.text)
         r.raise_for_status()
