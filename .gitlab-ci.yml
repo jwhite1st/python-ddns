@@ -1,16 +1,15 @@
 stages:
-- lint
-- pytest
-- test
-- Test_Build
-- Deploy_to_PyPi
+  - lint
+  - pytest
+  - test
+  - Test_Build
+  - Deploy_to_PyPi
 
 include:
   - template: Dependency-Scanning.gitlab-ci.yml
   - template: SAST.gitlab-ci.yml
   - template: License-Scanning.gitlab-ci.yml
   - template: Security/Secret-Detection.gitlab-ci.yml
-
 
 license_scanning:
   rules:
@@ -90,6 +89,7 @@ python-3.9-test:
   extends: ".test"
   image: python:3.9
 
+
 python-3.10-test:
   needs:
     - python-3.10-lint
@@ -106,6 +106,7 @@ python-3.10-test:
   - pip install -r requirements.txt
  script:
    - make check-dist
+
 
 python-3.6-build:
   needs:
@@ -195,4 +196,3 @@ Deploy_to_PyPi:
       - master
     variables:
       - $CI_COMMIT_TAG
-
