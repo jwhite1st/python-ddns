@@ -18,10 +18,10 @@ setup(
     author="Cyb3r Jak3",
     author_email="jake@jwhite.network",
     install_requires=["dnspython", "requests", "psutil"],
-    description="A DDNS client that updates with current IP. "
-    "Currently Cloudflare, Hurricane Electric and Strato are supported.",  # noqa: E501 pylint: disable=line-too-long
+    description="A DDNS client that updates providers with host machine's current IP.",
     url="https://gitlab.com/Cyb3r-Jak3/python-ddns",
     project_urls={
+        "Changelog": "https://gitlab.com/Cyb3r-Jak3/python-ddns/-/blob/master/CHANGELOG.md",
         "Issues": "https://gitlab.com/Cyb3r-Jak3/python-ddns/issues",
         "Source": "https://gitlab.com/Cyb3r-Jak3/python-ddns",
     },
