@@ -1,5 +1,5 @@
 """Python DDNS main entry point"""
-from configparser import ConfigParser
+from configparser import ConfigParser, NoSectionError
 import argparse
 import os
 import sys
@@ -18,9 +18,10 @@ def make_logger(name: str, loglevel: str) -> logging.Logger:
     formatter = logging.Formatter(
         "%(levelname)s - %(name)s - %(asctime)s - %(message)s", "%Y-%m-%d %H:%M:%S"
     )
-    fh = logging.FileHandler("{}.log".format(name), mode="w")
-    fh.setFormatter(formatter)
-    logger.addHandler(fh)
+    if name:
+        fh = logging.FileHandler(name, mode="w")
+        fh.setFormatter(formatter)
+        logger.addHandler(fh)
     ch = logging.StreamHandler()
     ch.setFormatter(formatter)
     logger.addHandler(ch)
@@ -144,14 +145,14 @@ def run():
         dest="loglevel",
         const=logging.INFO,
     )
+    parser.add_argument(
+        "-l",
+        "--log",
+        default=None,
+        dest="logfilename",
+        help="log to filename",
+    )
     args = parser.parse_args()
-
-    log = make_logger("PDDNS", args.loglevel)
-    log.info("Starting up")
-    log.debug(args)
-
-    if args.initialize:
-        sys.exit(initialize(log))
 
     CONFIG = ConfigParser(interpolation=None)
     if args.configfile == "config.conf":
@@ -160,10 +161,25 @@ def run():
     else:
         CONFIG.read(args.configfile)
 
+    try:
+        if args.logfilename:
+            logfilename = args.logfilename
+        else:
+            logfilename = CONFIG.get("PDDNS", "Logfilename")
+    except NoSectionError:
+        logfilename = None
+
+    log = make_logger(logfilename, args.loglevel)
+    log.info("Starting up")
+    log.debug(args)
+
+    if args.initialize:
+        sys.exit(initialize(log))
+
     if args.test:
         sys.exit(quick_test(log, CONFIG))
 
-    provider = CONFIG.get("Provider", "Provider").lower()
+    provider = CONFIG.get("PDDNS", "Provider").lower()
 
     if args.cloud or provider == "afraid":
         client = Afraid(CONFIG, __version__)

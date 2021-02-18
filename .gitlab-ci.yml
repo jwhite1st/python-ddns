@@ -147,7 +147,7 @@ python-3.10-build:
     - pip show -f python_ddns
     - command -v pddns
     - pddns -i -d
-    - pddns -t -d
+    - pddns -t -d --log test.log
 
 python-3.6-test-build:
   needs:
