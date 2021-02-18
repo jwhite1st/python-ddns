@@ -15,12 +15,14 @@ Tested and supported on the following Python versions:
   - 3.7
   - 3.8
   - 3.9
+  - 3.10-rc
 
 ## Provider List
 
   - [X] Cloudflare
   - [X] Hurricane Electric
-  - [X] Strato - Thanks @Braumeister
+  - [X] Strato - @Braumeister
+  - [X] Afraid.org - @Braumeister
   - [ ] DBSimple
   - [ ] NameCheap
 

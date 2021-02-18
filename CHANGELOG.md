@@ -2,11 +2,20 @@
 
 # Changelog
 
+## [3.0.0] - 2020-02-17
+
+### Added
+
+  - Support for afraid.org @Braumeister
+  - Testing for 3.10-rc
+  - Tests for providers
+  - Log file support @Braumeister
+
 ## [v2.3.1] - 2020-01-31
 
 ### Bug Fixed
 
-  - Fixed bug where IPv6 was not being disabled @Braumeister
+  - Fixed a bug where IPv6 was not being disabled @Braumeister
 
 ## [v2.3.0] - 2020-01-27
 
